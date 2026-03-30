@@ -2,6 +2,7 @@ import Quickshell
 import QtQuick
 import Quickshell.Io
 import Quickshell.Hyprland
+import Quickshell.Services.UPower
 
 PanelWindow {
     id: bar
@@ -63,6 +64,40 @@ PanelWindow {
                     font.bold: true
                 }
             }
+        }
+    }
+
+    // THE POWER MENU
+    Rectangle {
+        id: powerbutton
+        anchors {
+            bottom: parent.bottom
+            horizontalCenter: parent.horizontalCenter
+            bottomMargin: 10
+        }
+        color: "white"
+        width: 24
+        height: 24
+        radius: 6
+
+        Text {
+            anchors.centerIn: parent
+            text: "⏻"
+            font.bold: true
+            font.pixelSize: 28
+        }
+
+        Process {
+            id: powerProcess
+            command: ["systemctl", "poweroff"]
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                powerProcess.running = true;
+            }
+            cursorShape: Qt.PointingHandCursor
         }
     }
 }
